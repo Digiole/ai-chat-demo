@@ -1,0 +1,100 @@
+
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+.translateX-hidden {
+  overflow-x: hidden !important;
+}
+
+.overflow-x-hidden{
+ 
+  overflow-x: hidden !important;
+}
+
+.overflow-y-hidden{
+  overflow-y: hidden !important;
+  
+}
+.relative{
+text-align: center;
+}
+
+.sidebar {
+  width: 400px;
+  position: fixed; 
+  top: 0;
+  right: 0;
+  z-index: 999999;
+  height: 100vh;
+  align-items: start;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.translateX-hidden {
+  transform: translateX(345px); /* Change from 350px to 100% */
+}
+
+
+.capitalize{
+  text-transform: capitalize;
+}
+
+.bg-primary{
+  background-color: #fff;
+}
+.bg-secondary{
+  background-color: #F5F6F6;
+}
+
+
+.btn-hover:hover{
+ 
+  background-color: #D9D9D9;
+  transition: all 0.2s ease-in-out;
+}
+.btn-hover{
+  margin: 0;
+ padding:2px;
+width: 100%;
+text-align: center;
+  transition: all 0.2s ease-in-out;
+}
+
+
+
+
+/* CustomScrollbar.css */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px; /* Set scrollbar width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #b6b6b6; /* Set scrollbar thumb color */
+  border-radius: 5px; /* Set scrollbar thumb border radius */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent; /* Set scrollbar track color */
+}
+
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none; /* Hide scrollbar buttons */
+}
+
+
+
+.text-primary{
+  color: #1A3564;
+}
