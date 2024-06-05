@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import Update from './AdminComponents/Update';
 import { AddIcon } from '@chakra-ui/icons';
+import { BACKEND_URL } from '../URLS';
 
 const Admin = () => {
   const [demoId, setDemoId] = useState('');
@@ -77,7 +78,7 @@ const Admin = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/demos', {
+      const response = await fetch(`${BACKEND_URL}/demos`, {
         method: 'POST',
         body: formData,
       });
@@ -170,6 +171,9 @@ const Admin = () => {
                     value={message.role}
                     onChange={(e) => handleRoleChange(index, e.target.value)}
                   >
+                    <option value="" disabled selected hidden>
+                      Select a role
+                    </option>
                     <option value="system">System</option>
                     <option value="user">User</option>
                     <option value="assistant">Assistant</option>

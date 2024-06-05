@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Flex, Box, Text } from '@chakra-ui/react';
+import { Flex, Box, Text, Button } from '@chakra-ui/react';
 import SearchInputWithButton from './SearchInput';
 import ConversationBox from './ConversationBox';
-
+import MyIcon from './imgs/headset';
 import { SendMessage, GetMessage } from './openAi';
 
 import { useParams } from 'react-router-dom';
+import AiSpeaking from './AiSpeaking';
+import { ChevronUpIcon } from '@chakra-ui/icons';
 
 const MainScreen = () => {
+  const [isOpen, setisOpen] = useState(false);
   const { convId } = useParams();
+  const [lastText, setLastText] = useState('');
 
   const [SearchTerm, setSearchTerm] = useState('');
 
@@ -21,11 +25,13 @@ const MainScreen = () => {
     GetMessage({ setData, setMessages, setisLoading, convId });
   }, [convId]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (searchTerm) => {
     SendMessage({
+      lastText,
+      setLastText,
       setMessages,
       messages,
-      SearchTerm,
+      SearchTerm: searchTerm,
       setisLoading,
       setSearchTerm,
       convId,
@@ -52,7 +58,22 @@ const MainScreen = () => {
         position="relative"
       >
         {messages ? (
-          <>
+          <React.Fragment>
+            {isOpen ? (
+              <AiSpeaking
+                setisOpen={setisOpen}
+                isOpen={isOpen}
+                avatar={data.avatarUrl}
+                name={data.name}
+                isLoading={isLoading}
+                SearchTerm={SearchTerm}
+                setSearchTerm={setSearchTerm}
+                submit={() => handleSendMessage(SearchTerm)}
+                lastText={lastText}
+              />
+            ) : (
+              ''
+            )}
             <ConversationBox
               answer={messages}
               isLoading={isLoading}
@@ -69,14 +90,34 @@ const MainScreen = () => {
               mx="auto"
               py={5}
             >
+              <Button
+                className="bg-secondary"
+                position="absolute"
+                roundedTop={'full'}
+                pr={10}
+                pl={10}
+                left={'50%'}
+                top={-10}
+                textColor={'#768486'}
+                bg={'bg-secondary'}
+                _hover={{ background: 'bg-secondary' }}
+                transform={'translateX(-50%)'}
+                onClick={() => setisOpen(!isOpen)}
+              >
+                <ChevronUpIcon boxSize={6} />
+                <Text pl={2} pr={3}>
+                  Voice Chat
+                </Text>{' '}
+                <MyIcon />
+              </Button>
               <SearchInputWithButton
                 isLoading={isLoading}
                 SearchTerm={SearchTerm}
                 setSearchTerm={setSearchTerm}
-                submit={handleSendMessage}
+                submit={() => handleSendMessage(SearchTerm)}
               />
             </Box>
-          </>
+          </React.Fragment>
         ) : (
           <Flex
             height="100vh"

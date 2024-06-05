@@ -1,4 +1,3 @@
-import { TriangleUpIcon } from '@chakra-ui/icons';
 import {
   Input,
   InputGroup,
@@ -6,9 +5,13 @@ import {
   InputRightElement,
   Box,
   Text,
+  InputLeftElement,
 } from '@chakra-ui/react';
-import { Spinner } from '@chakra-ui/react';
 
+import SpeechToText from './SpeechToText';
+
+import send from './imgs/send.json';
+import Lottie from 'react-lottie';
 const SearchInputWithButton = ({
   isLoading,
   SearchTerm,
@@ -33,12 +36,13 @@ const SearchInputWithButton = ({
         <Input
           borderRadius={20}
           pr="4.5rem"
+          pl="1.5rem"
           placeholder="Type here.."
           onChange={(e) => handleChange(e)}
           value={SearchTerm}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && SearchTerm) {
-              submit();
+              submit(SearchTerm);
             }
           }}
         />
@@ -47,14 +51,48 @@ const SearchInputWithButton = ({
             size="md"
             borderRadius={20}
             textTransform="capitalize"
-            onClick={() => submit()}
+            onClick={() => submit(SearchTerm)}
             isDisabled={isLoading || !SearchTerm}
-            bgColor={'gray.200'}
-            _hover={{ bg: 'gray.300' }}
+            background={'transparent'}
+            _hover={{ background: 'transparent' }}
           >
-            {isLoading ? <Spinner /> : <TriangleUpIcon />}
+            <Lottie
+              options={{
+                loop: true,
+                autoplay: true,
+                animationData: send,
+                rendererSettings: {
+                  preserveAspectRatio: 'xMidYMid slice',
+                },
+              }}
+              isStopped={!isLoading}
+              height={150}
+              width={150}
+              speed={5}
+            />
           </Button>
         </InputRightElement>
+        {
+          //  <InputLeftElement
+          //       width="3.5rem"
+          //       mr={2}
+          //       display="flex"
+          //       alignItems="center"
+          //       justifyContent="center"
+          //       height="full"
+          //     >
+          //       {
+          //         <Box
+          //         cursor={'pointer'}
+          //         alignItems="center"
+          //         display="flex"
+          //         height="full"
+          //       >
+          //         <SpeechToText setSearchTerm={setSearchTerm} isLoading={isLoading} />
+          //         </Box>
+          //       }
+          //         </InputLeftElement>
+        }
       </InputGroup>
       <Text pt={2} textAlign={'center'}>
         Powered by Digiole

@@ -32,19 +32,16 @@ text-align: center;
 }
 
 .sidebar {
-  width: 400px;
-  position: fixed; 
-  top: 0;
-  right: 0;
-  z-index: 999999;
+  
+ 
+
+ 
   height: 100vh;
   align-items: start;
   transition: transform 0.3s ease-in-out;
 }
 
-.sidebar.translateX-hidden {
-  transform: translateX(345px); /* Change from 350px to 100% */
-}
+
 
 
 .capitalize{

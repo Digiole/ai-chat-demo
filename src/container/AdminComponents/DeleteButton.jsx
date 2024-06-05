@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, useToast } from '@chakra-ui/react';
-
+import { BACKEND_URL } from '../../URLS';
 const DeleteButton = ({ currentDemo }) => {
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
@@ -10,7 +10,7 @@ const DeleteButton = ({ currentDemo }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/demos/${currentDemo.demoId}`,
+        `${BACKEND_URL}/demos/${currentDemo.demoId}`,
         {
           method: 'DELETE',
         }

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
 import {
   FormControl,
   FormLabel,
@@ -13,8 +14,10 @@ import {
   useToast,
   Grid,
 } from '@chakra-ui/react';
-import { AddIcon, DeleteIcon, MinusIcon } from '@chakra-ui/icons';
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import DeleteButton from './DeleteButton';
+
+import { BACKEND_URL } from '../../URLS';
 const UpdateDemoForm = () => {
   const [currentDemo, setCurrentDemo] = useState({
     demoId: null,
@@ -24,16 +27,12 @@ const UpdateDemoForm = () => {
   });
   const [demos, setDemos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [Data, setData] = useState({});
+
   const toast = useToast();
 
-  useEffect(() => {
-    fetchDemos();
-  }, []);
-
-  const fetchDemos = async () => {
+  const fetchDemos = useCallback(async () => {
     try {
-      const response = await fetch('http://localhost:5000/demos');
+      const response = await fetch(`${BACKEND_URL}/demos`);
       if (!response.ok) {
         throw new Error('Failed to fetch demos');
       }
@@ -48,7 +47,13 @@ const UpdateDemoForm = () => {
         isClosable: true,
       });
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchDemos();
+
+    return;
+  }, [fetchDemos]);
 
   const setDemoValue = (e) => {
     const selectedDemoId = e.target.value;
@@ -126,7 +131,7 @@ const UpdateDemoForm = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/demos/${currentDemo.demoId}`,
+        `${BACKEND_URL}/demos/${currentDemo.demoId}`,
         {
           method: 'PUT',
           body: formData,

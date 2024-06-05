@@ -1,4 +1,5 @@
 import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
+
 import React, { useEffect, useState } from 'react';
 
 function CopyButton({ text }) {
@@ -28,13 +29,9 @@ function CopyButton({ text }) {
   return (
     <div>
       {!isCopied ? (
-        <button shape="round" onClick={() => copyToClipboard(text)}>
-          <CopyIcon />
-        </button>
+        <CopyIcon onClick={() => copyToClipboard(text)} cursor={'pointer'} />
       ) : (
-        <button shape="round" disabled>
-          <CheckIcon />
-        </button>
+        <CheckIcon />
       )}
     </div>
   );

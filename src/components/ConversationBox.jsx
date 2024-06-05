@@ -3,6 +3,9 @@ import React, { useEffect, useRef } from 'react';
 import img from './imgs/chatting.gif';
 import CopyButton from './CopyButton';
 import userIcon from './imgs/userIcon.png';
+import { svgDataUrl } from './imgs/fallbackimg';
+import TextToSpeech from './TextToSpeech';
+
 const ConversationBox = ({ answer, isLoading, name, avatar }) => {
   const boxRef = useRef(null);
   useEffect(() => {
@@ -32,7 +35,7 @@ const ConversationBox = ({ answer, isLoading, name, avatar }) => {
         <Grid placeItems="center" textAlign="center">
           <Image
             src={avatar}
-            fallbackSrc="https://icon-park.com/imagefiles/loading7_brown.gif"
+            fallbackSrc={svgDataUrl}
             width={'150px'}
             height={'150px'}
           />
@@ -50,7 +53,7 @@ const ConversationBox = ({ answer, isLoading, name, avatar }) => {
             }
             return (
               <Grid flexDirection="row" key={index} width={'100%'}>
-                {msg.role === 'user' ? (
+                {msg.role === 'user' && msg.content !== '' ? (
                   <Box className="bg-secondary">
                     <Box width={{ base: '100%', md: '80%' }} mx={'auto'} p={3}>
                       <Flex>
@@ -86,8 +89,13 @@ const ConversationBox = ({ answer, isLoading, name, avatar }) => {
                         </Text>
                       </Flex>
                       <Text marginLeft={9}>{msg.content}</Text>
-                      <Box display="flex" justifyContent="flex-end">
+                      <Box
+                        display="flex"
+                        justifyContent="flex-end"
+                        alignItems={'center'}
+                      >
                         <CopyButton text={msg.content} />
+                        <TextToSpeech textProp={msg.content} />
                       </Box>
                     </Box>
                   </React.Fragment>
